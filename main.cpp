@@ -65,7 +65,8 @@ int main(int argc, char* argv[]) {
         writer.set_property("seed", g_seed);
 
         Generator generator {g_path_input, g_path_output, writer, 1.0, g_ef_vertices, g_ef_edges, g_aging, g_seed};
-        generator.generate();
+        //generator.generate();
+        generator.generate_hotspot0();
     } catch (common::Error& e){
         cerr << e << endl;
         cerr << "Type `" << argv[0] << " --help' to check how to run the program\n";

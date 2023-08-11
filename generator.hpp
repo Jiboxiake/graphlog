@@ -29,7 +29,15 @@
 
 class Writer; // forward decl.
 
+struct hotspot_edge_struct{
+    hotspot_edge_struct(uint64_t s, uint64_t t, double w):source(s),destination(t),weight(w){}
+    hotspot_edge_struct(const hotspot_edge_struct& other):source(other.source),destination(other.destination),weight(other.weight){}
+    uint64_t source;
+    uint64_t destination;
+    double weight;
+};
 class Generator {
+
     Writer& m_writer; // serialise the operations in the log file
 
     uint64_t m_num_operations; // total number of operations (insertions/deletions of edges) to create
@@ -58,6 +66,16 @@ class Generator {
     // Actual generator, return the number of operations performed
     uint64_t generate0();
 
+
+    uint64_t generate_hotspot_workload0();
+
+    uint64_t generate_hotspot_workload1();
+
+    uint64_t generate_hotspot_workload2();
+
+    uint64_t generate_hotspot_workload3();
+
+    void record_clustered_operation(std::unordered_map<uint64_t, std::vector<hotspot_edge_struct>>& clustered_by_source, uint64_t source, uint64_t destination, double weight);
 public:
     // Constructor
     Generator(const std::string& path_input_graph, const std::string& path_output_log, Writer& writer, double sf_frequencies, double ef_vertices, double ef_edges, double aging_factor, uint64_t seed);
@@ -68,6 +86,7 @@ public:
     // Generate the operations to perform
     void generate();
 
+    void generate_hotspot0();
     // Total number of vertices that will appear in the final graph
     uint64_t num_final_vertices() const { return m_num_vertices_final; }
 
